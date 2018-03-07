@@ -1,0 +1,24 @@
+version: '3'
+services:
+  oe117-db:
+    image: oe117-db:latest
+    volumes:
+    - S:\workspaces\docker-volumes\sports2000:/var/lib/openedge/data
+    ports:
+    - '20666:20666'
+    - '20670-20700:20670-20700'
+  oe117-as:
+    image: oe117-as:latest
+    volumes:
+    - S:\workspaces\docker-volumes\appserver:/var/lib/openedge/code
+    ports:
+    - '20931:20931'
+    - '3090:3090'
+    - '21100-21200:21100-21200'
+    environment:
+    - OPENEDGE_DB=openedge
+    - OPENEDGE_HOST=oe117-db
+    - OPENEDGE_BROKER_PORT=20666
+    - OPENEDGE_ALIAS=
+    links:
+    - oe117-db
