@@ -4,6 +4,7 @@ services:
     image: oe117-db:latest
     volumes:
     - S:\workspaces\docker-volumes\sports2000:/var/lib/openedge/data
+    - S:\workspaces\docker-volumes\sports2000\code:/var/lib/openedge/code
     ports:
     - '20666:20666'
     - '20670-20700:20670-20700'
@@ -20,5 +21,15 @@ services:
     - OPENEDGE_HOST=oe117-db
     - OPENEDGE_BROKER_PORT=20666
     - OPENEDGE_ALIAS=
+    links:
+    - oe117-db
+  sequelize-odbc:
+    image: sequelize-odbc-openedge:latest
+    ports:
+    - '30000:30000'
+    links:
+    - oe117-db
+  node-odbc:
+    image: docker-node-odbc:latest
     links:
     - oe117-db
